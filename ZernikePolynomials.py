@@ -1,5 +1,241 @@
 import numpy as np 
 
+class SquarePolynomials: 
+    """
+    A class containing a set of orthonormal square polynomials 
+    in Cartesian coordinates from Mahajan and Dai 
+    Orthonormal polynomials in wavefront analysis: analytical solution
+    J. Opt. Soc. Am. A / Vol. 24, No. 9 / September 2007
+    """
+    def __init__(self):
+        pass
+
+
+    def evaluate(self, function_name, xdata, A):
+            """
+            Evaluate a specific polynomial function by name.
+            
+            Parameters:
+            -----------
+            function_name : str
+                Name of the function to evaluate ('S1', 'S2', 'S3', 'S4', 'S5', ...)
+            xdata : tuple or list
+                Input data as (x, y) coordinates
+            A : float
+                Amplitude parameter
+            
+            Returns:
+            --------
+            numpy.ndarray
+                Result of the polynomial evaluation
+            """
+            if hasattr(self, function_name):
+                return getattr(self, function_name)(xdata, A)
+            else:
+                raise ValueError(f"Function {function_name} not found")
+        
+    def evaluate_all(self, xdata, A_values):
+        """
+        Evaluate all polynomial functions with given amplitude values.
+        
+        Parameters:
+        -----------
+        xdata : tuple or list
+            Input data as (x, y) coordinates
+        A_values : list or array
+            Amplitude values for each function [A1, A2, A3, A4, A5]
+        
+        Returns:
+        --------
+        dict
+            Dictionary with function names as keys and results as values
+        """
+        if len(A_values) != 29:
+            raise ValueError("A_values must contain exactly 29 values")
+        
+        results = {}
+        function_names = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15', 
+                          'S16', 'S17', 'S18', 'S19', 'S20', 'S21', 'S22', 'S23', 'S24', 'S25', 'S26', 'S27', 'S28', 'S29']
+        
+        for i, func_name in enumerate(function_names):
+            results[func_name] = getattr(self, func_name)(xdata, A_values[i])
+        
+        return results
+    
+    def get_function_list(self):
+        """Return a list of available polynomial functions."""
+        return ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15', 
+                'S16', 'S17', 'S18', 'S19', 'S20', 'S21', 'S22', 'S23', 'S24', 'S25', 'S26', 'S27', 'S28', 'S29']
+    
+    @staticmethod
+    def S1(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * np.ones_like(x)
+
+    @staticmethod
+    def S2(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * np.sqrt(6) * x
+    
+    @staticmethod
+    def S3(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * np.sqrt(6) * y
+
+    @staticmethod
+    def S4(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(5/2) * (3*rho2 - 1)
+
+    @staticmethod
+    def S5(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * 6 * x * y
+
+    @staticmethod
+    def S6(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * 3 * np.sqrt(5/2) * (x**2 - y**2)
+
+    @staticmethod
+    def S7(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(21/31) * (15 * rho2 -7) * y
+
+    @staticmethod
+    def S8(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(21/31) * (15 * rho2 -7) * x
+
+    @staticmethod
+    def S9(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * np.sqrt(5/31) * (27 * x**2 - 35 * y**2 + 6) *y 
+
+
+    @staticmethod
+    def S10(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * np.sqrt(5/31) * (35 * x**2 - 27 * y**2 - 6) * x
+
+    @staticmethod
+    def S11(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 1/(2*np.sqrt(67)) * (315 * rho2**2 - 240*rho2 + 31)
+
+    @staticmethod
+    def S12(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 15/(2*np.sqrt(2)) * (x**2 - y**2) * (7*rho2 -3)
+
+    @staticmethod
+    def S13(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(42) * (5 * rho2 -3) * x * y
+
+    @staticmethod
+    def S14(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 3 / (4 * np.sqrt(134)) * (10*(49*x**4 - 36*x**2 * y**2 + 49 * y**4) - 150*rho2 + 11)
+
+    @staticmethod
+    def S15(xdata, A):
+        x, y = xdata[0], xdata[1]
+        return A * 5 * np.sqrt(42) * (x**2 - y**2) * x * y 
+
+    @staticmethod
+    def S16(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(55/1966) * (315*rho2**2 - 280*x**2 - 324*y**2 + 57) * x 
+
+    @staticmethod
+    def S17(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(55/1966) * (315*rho2**2 - 324*x**2 - 280*y**2 + 57) * y 
+
+    @staticmethod
+    def S18(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 0.5 * np.sqrt(3/844397) * (105 * (1023*x**4 + 80*x**2 * y**2 - 943*y**4) - 61075 * x**2 + 39915*y**2 + 4692) * x
+
+    @staticmethod
+    def S19(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 0.5 * np.sqrt(3/844397) * (105 * (943*x**4 - 80*x**2 * y**2 - 1023*y**4) - 39915 * x**2 + 61075*y**2 + 4692) * y
+
+    @staticmethod
+    def S20(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 0.25 * np.sqrt(7/859) * (6 * (693*x**4 - 500*x**2 * y**2 + 525*y**4) - 1810 * x**2 - 450*y**2 + 165) * x
+
+    @staticmethod
+    def S21(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 0.25 * np.sqrt(7/859) * (6 * (525*x**4 - 500*x**2 * y**2 + 693*y**4) - 450 * x**2 - 1810*y**2 + 165) * y
+
+    @staticmethod
+    def S22(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 0.25 * np.sqrt(65/849) * (1155 * rho2**3 - 15 * (91 * x**4 + 198 * x**2 * y**2 + 91*y**4) + 453*rho2 - 31)
+
+    @staticmethod
+    def S23(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * np.sqrt(33/3923) * (1575 * rho2**2 - 1820*rho2 + 471) * x * y
+
+    @staticmethod
+    def S24(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 24/4 * np.sqrt(65/1349) * (165 * rho2**2 - 140*rho2 + 27) * (x**2 - y**2)
+
+    @staticmethod
+    def S25(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 7 * np.sqrt(33/2) * (9 * rho2 - 5) * x * y * (x**2 - y**2)
+
+    @staticmethod
+    def S26(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * (1 / (8 * np.sqrt(849)) * (42 * (1573 * x**6 - 375 * x**4 * y**2 - 375 * x**2 * y**4 + 1573 * y**6) - 60*(707*x**4 - 225 * x**2 * y**2 + 707 * y**4) + 6045*rho2 - 245))
+
+    @staticmethod
+    def S27(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 1 / (2 * np.sqrt(7846)) * (14 * (2673 * x**4 - 2500 * x**2 * y**2 + 2673 * y**4) - 10290*rho2 + 1305) * x * y 
+
+    @staticmethod
+    def S28(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * 21 / (8 * np.sqrt(1349)) * (3146 * x**6 - 2250 * x**4 * y**2 + 2250 *x**2 * y**4 - 3146*y**6 - 1770 *(x**4 - y**4) + 245*(x**2-y**2))
+
+    @staticmethod
+    def S29(xdata, A):
+        x, y = xdata[0], xdata[1]
+        rho2 = x**2 + y**2
+        return A * (-13.79189793 + 150.92209099*x**2 + 117.01812058*y**2 - 352.15154565*x**4 - 657.27245247 *x**2 * y**2 - 291.12439892*y**4 + 222.62454035*x**6 + 667.87362106 * x**4 * y**2 +667.87362106 *x**2 * y**4 + 222.62454035* y**6)*y
+
+
+
 class RectangularPolynomials:
     """
     A class containing a set of orthonormal rectangular polynomials 
@@ -181,178 +417,3 @@ class RectangularPolynomials:
         """Return a list of available polynomial functions."""
         return ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15']
     
-
-class SquarePolynomials: 
-    """
-    A class containing a set of orthonormal square polynomials 
-    in Cartesian coordinates from Mahajan and Dai 
-    Orthonormal polynomials in wavefront analysis: analytical solution
-    J. Opt. Soc. Am. A / Vol. 24, No. 9 / September 2007
-    """
-    
-    @staticmethod
-    def S1(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * np.ones_like(x)
-
-    @staticmethod
-    def S2(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * np.sqrt(6) * x
-    
-    @staticmethod
-    def S3(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * np.sqrt(6) * y
-
-    @staticmethod
-    def S4(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(5/2) * (3*rho2 - 1)
-
-    @staticmethod
-    def S5(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * 6 * x * y
-
-    @staticmethod
-    def S6(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * 3 * np.sqrt(5/2) * (x**2 - y**2)
-
-    @staticmethod
-    def S7(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(21/31) * (15 * rho2 -7) * y
-
-    @staticmethod
-    def S8(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(21/31) * (15 * rho2 -7) * x
-
-    @staticmethod
-    def S9(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * np.sqrt(5/31) * (27 * x**2 - 35 * y**2 + 6) *y 
-
-
-    @staticmethod
-    def S10(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * np.sqrt(5/31) * (35 * x**2 - 27 * y**2 - 6) * x
-
-    @staticmethod
-    def S11(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 1/(2*np.sqrt(67)) * (315 * rho2**2 - 240*rho2 + 31)
-
-    @staticmethod
-    def S12(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 15/(2*np.sqrt(2)) * (x**2 - y**2) * (7*rho2 -3)
-
-    @staticmethod
-    def S13(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(42) * (5 * rho2 -3) * x * y
-
-    @staticmethod
-    def S14(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 3 / (4 * np.sqrt(134)) * (10*(49*x**4 - 36*x**2 * y**2 + 49 * y**4) - 150*rho2 + 11)
-
-    @staticmethod
-    def S15(xdata, A):
-        x, y = xdata[0], xdata[1]
-        return A * 5 * np.sqrt(42) * (x**2 - y**2) * x * y 
-
-    @staticmethod
-    def S16(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(55/1966) * (315*rho2**2 - 280*x**2 - 324*y**2 + 57) * x 
-
-    @staticmethod
-    def S17(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(55/1966) * (315*rho2**2 - 324*x**2 - 280*y**2 + 57) * y 
-
-    @staticmethod
-    def S18(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 0.5 * np.sqrt(3/844397) * (105 * (1023*x**4 + 80*x**2 * y**2 - 943*y**4) - 61075 * x**2 + 39915*y**2 + 4692) * x
-
-    @staticmethod
-    def S19(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 0.5 * np.sqrt(3/844397) * (105 * (943*x**4 - 80*x**2 * y**2 - 1023*y**4) - 39915 * x**2 + 61075*y**2 + 4692) * y
-
-    @staticmethod
-    def S20(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 0.25 * np.sqrt(7/859) * (6 * (693*x**4 - 500*x**2 * y**2 + 525*y**4) - 1810 * x**2 - 450*y**2 + 165) * x
-
-    @staticmethod
-    def S21(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 0.25 * np.sqrt(7/859) * (6 * (525*x**4 - 500*x**2 * y**2 + 693*y**4) - 450 * x**2 - 1810*y**2 + 165) * y
-
-    @staticmethod
-    def S22(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 0.25 * np.sqrt(65/849) * (1155 * rho2**3 - 15 * (91 * x**4 + 198 * x**2 * y**2 + 91*y**4) + 453*rho2 - 31)
-
-    @staticmethod
-    def S23(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * np.sqrt(33/3923) * (1575 * rho2**2 - 1820*rho2 + 471) * x * y
-
-    @staticmethod
-    def S24(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 24/4 * np.sqrt(65/1349) * (165 * rho2**2 - 140*rho2 + 27) * (x**2 - y**2)
-
-    @staticmethod
-    def S25(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 7 * np.sqrt(33/2) * (9 * rho2 - 5) * x * y * (x**2 - y**2)
-
-    @staticmethod
-    def S26(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * (1 / (8 * np.sqrt(849)) * (42 * (1573 * x**6 - 375 * x**4 * y**2 - 375 * x**2 * y**4 + 1573 * y**6) - 60*(707*x**4 - 225 * x**2 * y**2 + 707 * y**4) + 6045*rho2 - 245))
-
-    @staticmethod
-    def S27(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 1 / (2 * np.sqrt(7846)) * (14 * (2673 * x**4 - 2500 * x**2 * y**2 + 2673 * y**4) - 10290*rho2 + 1305) * x * y 
-
-    @staticmethod
-    def S28(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * 21 / (8 * np.sqrt(1349)) * (3146 * x**6 - 2250 * x**4 * y**2 + 2250 *x**2 * y**4 - 3146*y**6 - 1770 *(x**4 - y**4) + 245*(x**2-y**2))
-
-    @staticmethod
-    def S29(xdata, A):
-        x, y = xdata[0], xdata[1]
-        rho2 = x**2 + y**2
-        return A * (-13.79189793 + 150.92209099*x**2 + 117.01812058*y**2 - 352.15154565*x**4 - 657.27245247 *x**2 * y**2 - 291.12439892*y**4 + 222.62454035*x**6 + 667.87362106 * x**4 * y**2 +0667.87362106 *x**2 * y**4 + 222.62454035* y**6)*y
