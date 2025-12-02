@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zernike"  
+version = "0.1.0"
+description = "Zernike polynomial computation utilities"
+readme = "README.md"
+requires-python = ">=3.8"
+
+authors = [
+  { name="Margarita Zakharova", email="margarita.zakharova@desy.de" }
+]
+
+license = { file = "LICENSE" }    # or choose whatever license you want
+
+[tool.setuptools.packages.find]
+where = ["."]
