@@ -7,17 +7,31 @@ Mahajan and Dai. Orthonormal polynomials in wavefront analysis: analytical solut
 First 15 Zernike terms interpretation:
 
 **S1** - Piston 
+
 **S2** - Tilt *x*
+
 **S3** - Tilt *y*
+
 **S4** - Defocus
+
 **S5** - 45 degree astigmatism
+
 **S6** - Vertical astigmatism
+
 **S7** - Vertical coma
+
 **S8** - Horizontal coma
+
 **S9** - Vertical trefoil
+
 **S10** - Oblique trefoil
+
 **S11** - Primary spherical
+
 **S12** - Vertical secondary astigmatism
+
 **S13** - Oblique secondary astigmatism
+
 **S14** - Vertical quadrafoil
+
 **S15** - Oblique quadrafoil
