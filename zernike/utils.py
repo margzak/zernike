@@ -1,6 +1,6 @@
 
 import numpy as np 
-from ZernikePolynomials import RectangularPolynomials, SquarePolynomials
+from zernike.ZernikePolynomials import RectangularPolynomials, SquarePolynomials
 from scipy.optimize import curve_fit
 
 def extract_rectangular_coefficients(phase, a=1/np.sqrt(2)):
